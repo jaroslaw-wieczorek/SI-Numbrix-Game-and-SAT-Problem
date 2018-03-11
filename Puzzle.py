@@ -46,7 +46,8 @@ class Cell():
             self.ID = ID
             self.value = value
             
-                      
+             
+        
     def __str__(self):
         return "({:};{:})".format(self.ID , self.value)
            
@@ -60,10 +61,10 @@ class Puzzle():
           
     def __init__(self):
         self.puzzle = []
-        self.types=[0, 1]
         self.height=0
         self.width=0
  
+
     def load(self, filename, delim=';', nline='\n', qchar='"'):
         self.puzzle=[]
         if path.isfile(filename):
@@ -76,6 +77,7 @@ class Puzzle():
                      tmp=[]
                      self.height += 1
                      self.width = 0
+                     
                      for item in row:
                          if item == 'X' or item == 'x' :
                              tmp.append(Cell(0,0))
@@ -90,10 +92,20 @@ class Puzzle():
                  self.width = len(self.puzzle)
                 
                      
-    def listNeighboards(self, ID):
-        pass#for(p = self.puzzle.first(); p != self.puzzle.end(); ++p):
-           # pass
-
+    def listNeighbourhood(self, ID):
+        neighbourhood_list=[]
+        for x, row in enumerate(self.puzzle):  
+            for y, item in enumerate(row):
+                if item.ID == ID:
+                    if self.puzzle[x-1][y]:
+                        neighbourhood_list.append(self.puzzle[x-1][y])
+                    if self.puzzle[x+1][y]:
+                        neighbourhood_list.append(self.puzzle[x+1][y])
+                    if self.puzzle[x][y-1]:
+                        neighbourhood_list.append(self.puzzle[x][y-1])
+                    if self.puzzle[x][y+1]:
+                        neighbourhood_list.append(self.puzzle[x][y-1])
+        return neighbourhood_list
         
                
                      
@@ -114,9 +126,15 @@ def main():
     
     p=Puzzle()
     
+    p.load(path)
+    print(str(p.puzzle))
+    
+    print("\n")
+    
     
     p.load(path2)
-    print(str(p.puzzle))
+    print(str(p.listNeighbourhood(3)))
+    
     
    # p.listNeighboards(3)
 if __name__ == "__main__":

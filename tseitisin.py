@@ -38,7 +38,7 @@ class Encoding:
             return ints[looking_hash]
         #2 TO CHECK 
         else:
-            return {} #if don't exist return empty dict 
+            return None #if don't exist return None
         
         #Hash receives a clause and returns a unique DIMACS variable assigned to it in the hash table.
 

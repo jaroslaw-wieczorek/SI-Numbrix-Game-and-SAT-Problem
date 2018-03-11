@@ -35,7 +35,7 @@ class Encoding:
         #1 TO CHECK
         hash_key = hashlib.sha512(ints).hexdigest()
         if hash_key in ints:
-            return ints[looking_hash]
+            return ints[hash_key]
         #2 TO CHECK 
         else:
             return None #if don't exist return None

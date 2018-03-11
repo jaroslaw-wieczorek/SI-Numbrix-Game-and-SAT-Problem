@@ -1,11 +1,12 @@
 from bitstring import BitArray, BitStream
 import math
-
+import hashlib
 
 class Encoding:
 
     def __init__(self, n):
         self.n = n
+        self.hash_table={} #this is dictionary to hash function
 
     def convert(self, cellid, x):
         x -= 1
@@ -30,12 +31,25 @@ class Encoding:
         return result + 1
 
 
-    def hash(self, ints):
-        return 1
+    def hash(self, i, ints):
+        #1 TO CHECK
+        hash_key = hashlib.sha512(ints).hexdigest()
+        if hash_key in ints:
+            return ints[looking_hash]
+        #2 TO CHECK 
+        else:
+            return {} #if don't exist return empty dict 
+        
         #Hash receives a clause and returns a unique DIMACS variable assigned to it in the hash table.
 
-    def contains(self, ints):
-        return 1
+    def contains(self, i, ints):
+        #2 TO CHECK
+        hash_key = hashlib.sha512(ints).hexdigest()
+        
+        if hash_key in ints:
+            return True
+        else:
+            return False
         #Method Contains, returning True or False, checks whether hash table contains an entry for the clause received as an argument.
 
     def tseitin(self, ints):

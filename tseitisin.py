@@ -8,6 +8,7 @@ class Encoding:
         self.n = n
         self.hash_table={} #this is dictionary to hash function
 
+
     def convert(self, cellid, x):
         x -= 1
         b = math.log2(self.n)
@@ -20,6 +21,7 @@ class Encoding:
                 ints.append(-((cellid - 1) * b + 1))
             del xbit[-1]
         return ints
+    
 
     def iconverse(self, ints):
         result = 0
@@ -42,6 +44,7 @@ class Encoding:
         
         #Hash receives a clause and returns a unique DIMACS variable assigned to it in the hash table.
 
+
     def contains(self, i, ints):
         #2 TO CHECK
         hash_key = hashlib.sha512(ints).hexdigest()
@@ -51,6 +54,7 @@ class Encoding:
         else:
             return False
         #Method Contains, returning True or False, checks whether hash table contains an entry for the clause received as an argument.
+
 
     def tseitin(self, ints):
         CNF = []
@@ -71,6 +75,7 @@ class Encoding:
                 CNF.append([-h,i])
             return CNF
 
+
     def precedes(self, cellid, ids):
         CNF = []
         for x in range(1,self.n):
@@ -87,11 +92,13 @@ class Encoding:
             CNF.append(clause)
         return CNF
 
+
     def isequal(self, cellid, x):
         CNF = []
         for i in Encoding.convert(cellid,x):
             CNF.append(i)
         return CNF
+
 
     def encode(self, puzzle, outputfile):
         CNF = []

@@ -26,14 +26,13 @@ class Cell():
 
     def __init__(self, ID, value):
         if type(ID) != int:
-            raise TypeErrolooking_hashr("TypeError: ID")
+            raise TypeErro("TypeError: ID")
            
         elif ID < 0:
             raise ValueError("ValueError: ID")
         
         elif type(value) == int and value < 0 : 
-             raise ValueErrorlooking_hash("ValueError: ID")
-             looking_hash
+             raise ValueError("ValueError: ID")
         elif ID == 0 or value == 0:
             self.ID = 0
             self.value = 0
@@ -93,6 +92,7 @@ class Puzzle():
                 
                      
     def listNeighbourhood(self, ID):
+        """Looking neighbourhoods"""
         neighbourhood_list=[]
         for x, row in enumerate(self.puzzle):  
             for y, item in enumerate(row):

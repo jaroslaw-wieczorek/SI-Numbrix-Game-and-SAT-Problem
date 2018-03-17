@@ -26,7 +26,7 @@ class Cell():
 
     def __init__(self, ID, value):
         if type(ID) != int:
-            raise TypeErro("TypeError: ID")
+            raise TypeError("TypeError: ID")
            
         elif ID < 0:
             raise ValueError("ValueError: ID")

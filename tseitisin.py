@@ -121,3 +121,5 @@ class Encoding:
             if c.x != 0:
                 CNF.append(Encoding.isequal(c.cellid,c.x))
         print(CNF)
+        with open(outputfile, 'w') as file:
+            file.write(CNF)

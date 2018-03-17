@@ -9,6 +9,18 @@ class Encoding:
         self.hash_table={} #this is dictionary to hash function
 
 
+    def decode(self, puzzle, inputFile):
+        for i in range(1, puzzle.n):
+            ints = []
+            # ints <- first x literals from inputFile
+            # remove the first x literals from inputFile
+            # add the output of iConvert(ints) to values
+            values = []
+            values.append(Encoding.iconverse(ints))
+        # use Puzzle as a template to typeset values into output file--
+        print(values)        
+        
+        
     def convert(self, cellid, x):
         x -= 1
         b = math.log2(self.n)

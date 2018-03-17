@@ -6,6 +6,8 @@ Created on Sat Mar 17 13:02:13 2018
 """
 from board.puzzle import Puzzle
 from board.cell import Cell
+from tseitisin import Encoding
+
 from os import path
 
 def main():
@@ -31,12 +33,12 @@ def main():
     
     p.load(path2)
     print(str(p.listNeighbourhood(3)))
+
+    e=Encoding(81)
+    e.encode(p, "magic")
     pass
-
-
 
 
 if __name__ == '__main__':
     
     main()
-    

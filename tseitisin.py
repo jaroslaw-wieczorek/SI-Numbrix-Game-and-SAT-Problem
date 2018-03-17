@@ -21,16 +21,17 @@ class Encoding:
         print(values)        
         
         
-    def convert(self, cellid, x):
+    def convert(self, ID, x):
         x -= 1
         b = math.log2(self.n)
+        b = int(math.ceil(b))
         ints = []
         xbit = BitArray(uint=x, length=b)
         for i in range(1, b):
             if xbit[-1]:
-                ints.append(((cellid-1)*b+1))
+                ints.append(((ID-1)*b+1))
             else:
-                ints.append(-((cellid - 1) * b + 1))
+                ints.append(-((ID - 1) * b + 1))
             del xbit[-1]
         return ints
     
@@ -45,7 +46,7 @@ class Encoding:
         return result + 1
 
 
-    def hash(self, i, ints):
+    def hash(self, ints):
         #1 TO CHECK
         hash_key = hashlib.sha512(ints).hexdigest()
         if hash_key in ints:
@@ -57,7 +58,7 @@ class Encoding:
         #Hash receives a clause and returns a unique DIMACS variable assigned to it in the hash table.
 
 
-    def contains(self, i, ints):
+    def contains(self, ints):
         #2 TO CHECK
         hash_key = hashlib.sha512(ints).hexdigest()
         
@@ -88,38 +89,40 @@ class Encoding:
             return CNF
 
 
-    def precedes(self, cellid, ids):
+    def precedes(self, ID, ids):
         CNF = []
-        for x in range(1,self.n):
+        for x in range(1, self.n):
             clause = []
-            for i in Encoding.convert(cellid,x):
+            for i in Encoding.convert(self, ID, x):
                 #add -i to clause
                 clause.append(-i)
             for i in ids:
                 #add the output of Encoding.Hash(Encoding.convert(i,x + 1)) to clause
-                clause.append(Encoding.Hash(Encoding.convert(i,x + 1)))
+                clause.append(Encoding.hash(self, Encoding.convert(self, i.ID, x + 1)))
                 #add the output of Tseitin(Convert(i,x + 1)) to CNF
-                CNF.append(Encoding.tseitin(Encoding.convert(i,x + 1)))
+                CNF.append(Encoding.tseitin(Encoding.convert(self, i.ID, x + 1)))
             #add clause to CNF
             CNF.append(clause)
         return CNF
 
 
-    def isequal(self, cellid, x):
+    def isequal(self, ID, x):
         CNF = []
-        for i in Encoding.convert(cellid,x):
+        for i in Encoding.convert(ID, x):
             CNF.append(i)
         return CNF
 
 
     def encode(self, puzzle, outputfile):
         CNF = []
-        for c in puzzle:
-            ids = puzzle.listneighbours(c.cellid)
-            CNF.append(Encoding.precedes(c.cellid, ids))
-        for c in puzzle:
-            if c.x != 0:
-                CNF.append(Encoding.isequal(c.cellid,c.x))
+        for b in puzzle.puzzle:
+            for c in b:
+                ids = puzzle.listNeighbourhood(c.ID)
+                CNF.append(Encoding.precedes(self,c.ID, ids))
+        for b in puzzle.puzzle:
+            for c in b:
+                if c.x != 0:
+                    CNF.append(Encoding.isequal(c.ID,c.x))
         print(CNF)
-        with open(outputfile, 'w') as file:
-            file.write(CNF)
+        #with open(outputfile, 'w') as file:
+        #    file.write(CNF)

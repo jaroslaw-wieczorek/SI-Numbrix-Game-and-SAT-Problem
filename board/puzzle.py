@@ -12,8 +12,6 @@ import csv
 import os
 import sys
 
-from cell import Cell
-
 
 class Puzzle():
           
@@ -80,8 +78,8 @@ def main():
     print(Cell(0,None))
     
     
-    path = "./map1.csv"
-    path2 = "./map2.csv"
+    path = "../maps/map1.csv"
+    path2 = "../maps/map2.csv"
     
     p=Puzzle()
     

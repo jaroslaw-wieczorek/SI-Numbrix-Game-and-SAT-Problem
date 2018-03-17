@@ -4,8 +4,8 @@ Created on Sat Mar 17 13:02:13 2018
 
 @author: afar
 """
-from board import Puzzle
-from board import Cell
+from board.puzzle import Puzzle
+from board.cell import Cell
 
 def main():
     

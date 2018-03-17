@@ -10,8 +10,10 @@ from collections import namedtuple
 import array
 import csv
 import os
+from os import path
 import sys
 
+from .cell import Cell
 
 class Puzzle():
           
@@ -65,39 +67,6 @@ class Puzzle():
         return neighbourhood_list
         
                
-                     
-                     
-        
 
-def main():
-    print(Cell(0,0))
-    print(Cell(1,3))
-    print(Cell(1,0))
-    print(Cell(0,'x'))
-    print(Cell(1,'.'))
-    print(Cell(0,None))
-    
-    
-    path = "../maps/map1.csv"
-    path2 = "../maps/map2.csv"
-    
-    p=Puzzle()
-    
-    p.load(path)
-    print(str(p.puzzle))
-    
-    print("\n")
-    
-    
-    p.load(path2)
-    print(str(p.listNeighbourhood(3)))
-    
-    
-   # p.listNeighboards(3)
-if __name__ == "__main__":
-    main()
-   
-    
-    
 
     

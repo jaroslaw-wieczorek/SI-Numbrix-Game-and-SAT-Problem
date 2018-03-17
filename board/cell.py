@@ -42,6 +42,3 @@ class Cell():
         
     def __repr__(self):
         return "({:};{:})".format(self.ID , self.value)
-
-
-

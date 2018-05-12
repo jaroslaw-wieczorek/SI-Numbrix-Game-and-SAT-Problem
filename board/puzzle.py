@@ -45,14 +45,14 @@ class Puzzle():
                      self.height += 1
                      self.width = 0
                      
-                     for item in row:
-                         if item == 'X' or item == 'x' :
+                     for cell_value in row:
+                         if cell_value == 'X' or cell_value == 'x' :
                              tmp.append(Cell(0,0))
-                         elif item == '' or item =='.' :
+                         elif cell_value == '' or cell_value =='.' :
                              tmp.append(Cell(current_id, 0))
                              current_id+=1
                          else: 
-                             tmp.append(Cell(current_id, item))
+                             tmp.append(Cell(current_id, int(cell_value)))
                              current_id+=1
                                                           
                      self.puzzle.append(tmp)

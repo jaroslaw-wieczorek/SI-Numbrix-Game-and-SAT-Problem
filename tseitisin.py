@@ -4,10 +4,11 @@ import hashlib
 
 class Encoding:
 
-    def __init__(self, n):
+    def __init__(self, n,):
         self.n = n
         self.hash_table={} #this is dictionary to hash function
-
+        self.varnumber = 0
+        self.gb = 0
 
     def decode(self, puzzle, inputFile):
         for i in range(1, puzzle.n):
@@ -19,19 +20,20 @@ class Encoding:
             values.append(Encoding.iconverse(ints))
         # use Puzzle as a template to typeset values into output file--
         print(values)        
-        
-        
-    def convert(self, ID, x):
+
+    def convert(self, iD, x):
         x -= 1
         b = math.log2(self.n)
         b = int(math.ceil(b))
+        self.gb = b
+        self.varnumber = self.gb * self.n
         ints = []
         xbit = BitArray(uint=x, length=b)
         for i in range(1, b):
             if xbit[-1]:
-                ints.append(((ID-1)*b+1))
+                ints.append(((iD - 1) * b + 1))
             else:
-                ints.append(-((ID - 1) * b + 1))
+                ints.append(-((iD - 1) * b + 1))
             del xbit[-1]
         return ints
     
@@ -47,31 +49,21 @@ class Encoding:
 
 
     def hash(self, ints):
-        #1 TO CHECK
-        hash_key = hashlib.sha512(ints).hexdigest()
-        if hash_key in ints:
-            return ints[hash_key]
-        #2 TO CHECK 
-        else:
-            return None #if don't exist return None
-        
-        #Hash receives a clause and returns a unique DIMACS variable assigned to it in the hash table.
+        """Hash receives a clause and returns a unique DIMACS variable assigned to it in the hash table."""
+        self.varnumber = self.varnumber + 1
+        self.hash_table[''.join(map(str, ints))] = self.varnumber
+        return self.varnumber
+
 
 
     def contains(self, ints):
-        #2 TO CHECK
-        hash_key = hashlib.sha512(ints).hexdigest()
-        
-        if hash_key in ints:
-            return True
-        else:
-            return False
-        #Method Contains, returning True or False, checks whether hash table contains an entry for the clause received as an argument.
+        """Method Contains, returning True or False, checks whether hash table contains an entry for the clause received as an argument."""
+        return ''.join(map(str, ints)) in self.hash_table
 
 
     def tseitin(self, ints):
         CNF = []
-        if Encoding.contains(ints):
+        if self.contains(ints):
             return CNF
         else:
             clause = []
@@ -93,14 +85,14 @@ class Encoding:
         CNF = []
         for x in range(1, self.n):
             clause = []
-            for i in Encoding.convert(self, ID, x):
+            for i in self.convert(ID, x):
                 #add -i to clause
                 clause.append(-i)
             for i in ids:
                 #add the output of Encoding.Hash(Encoding.convert(i,x + 1)) to clause
-                clause.append(Encoding.hash(self, Encoding.convert(self, i.ID, x + 1)))
+                clause.append(Encoding.hash(self, self.convert(i.ID, x + 1)))
                 #add the output of Tseitin(Convert(i,x + 1)) to CNF
-                CNF.append(Encoding.tseitin(Encoding.convert(self, i.ID, x + 1)))
+                CNF.append(Encoding.tseitin(self, self.convert(i.ID, x + 1)))
             #add clause to CNF
             CNF.append(clause)
         return CNF
@@ -108,7 +100,7 @@ class Encoding:
 
     def isequal(self, ID, x):
         CNF = []
-        for i in Encoding.convert(ID, x):
+        for i in self.convert(ID, x):
             CNF.append(i)
         return CNF
 
@@ -118,11 +110,11 @@ class Encoding:
         for b in puzzle.puzzle:
             for c in b:
                 ids = puzzle.listNeighbourhood(c.ID)
-                CNF.append(Encoding.precedes(self,c.ID, ids))
+                CNF.append(Encoding.precedes(self, c.ID, ids))
         for b in puzzle.puzzle:
             for c in b:
                 if c.x != 0:
-                    CNF.append(Encoding.isequal(c.ID,c.x))
+                    CNF.append(Encoding.isequal(c.ID, c.x))
         print(CNF)
         #with open(outputfile, 'w') as file:
         #    file.write(CNF)

@@ -68,22 +68,22 @@ class Puzzle():
                 
                     if (row + 1 <=self.height-1):
                         cell = self.puzzle[row +1][col]
-                        print("x+1:",row," y:",col," cell:", cell)
+                        #print("x+1:",row," y:",col," cell:", cell)
                         neighbourhood_list.append(cell)
                         
                     if (row - 1 >=0):
                         cell = self.puzzle[row - 1][col]
-                        print("x-1:",row," y:",col," cell:", cell)
+                        #print("x-1:",row," y:",col," cell:", cell)
                         neighbourhood_list.append(cell)
                 
                     if (col + 1 <=self.width-1):
                         cell = self.puzzle[row][col + 1]
-                        print("x:",row," y+1:",col," cell:", cell)
+                        #print("x:",row," y+1:",col," cell:", cell)
                         neighbourhood_list.append(cell)
                         
-                    if (row - 1 >=0):
+                    if (col - 1 >=0):
                         cell = self.puzzle[row][col - 1]
-                        print("x:",row," y-1:",col," cell:", cell)
+                        #print("x:",row," y-1:",col," cell:", cell)
                         neighbourhood_list.append(cell)                    
                     break
                 

@@ -30,7 +30,7 @@ def main():
     print(p)
     print("\n")
     
-    print(str(p.listNeighbourhood(3)))
+    print(str(p.listNeighbourhood(10)))
     
     e=Encoding(81)
     e.encode(p, "magic")

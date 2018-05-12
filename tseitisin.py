@@ -113,8 +113,8 @@ class Encoding:
                 CNF.append(Encoding.precedes(self, c.ID, ids))
         for b in puzzle.puzzle:
             for c in b:
-                if c.x != 0:
-                    CNF.append(Encoding.isequal(c.ID, c.x))
+                if c.value != 0:
+                    CNF.append(Encoding.isequal(self, c.ID, c.value))
         print(CNF)
         #with open(outputfile, 'w') as file:
         #    file.write(CNF)

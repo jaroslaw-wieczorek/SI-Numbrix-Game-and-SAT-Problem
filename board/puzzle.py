@@ -22,6 +22,15 @@ class Puzzle():
         self.height=0
         self.width=0
  
+    def __repr__(self):
+        return ''.join(map(str,self.puzzle))
+        
+    
+    """
+        Fucntion takes csv and load it to self.puzzle variable
+        
+    
+    """
 
     def load(self, filename, delim=';', nline='\n', qchar='"'):
         self.puzzle=[]
@@ -53,17 +62,31 @@ class Puzzle():
     def listNeighbourhood(self, ID):
         """Looking neighbourhoods"""
         neighbourhood_list=[]
-        for x, row in enumerate(self.puzzle):  
-            for y, item in enumerate(row):
-                if item.ID == ID:
-                    if self.puzzle[x-1][y]:
-                        neighbourhood_list.append(self.puzzle[x-1][y])
-                    if self.puzzle[x+1][y]:
-                        neighbourhood_list.append(self.puzzle[x+1][y])
-                    if self.puzzle[x][y-1]:
-                        neighbourhood_list.append(self.puzzle[x][y-1])
-                    if self.puzzle[x][y+1]:
-                        neighbourhood_list.append(self.puzzle[x][y-1])
+        for row, rows in enumerate(self.puzzle):  
+            for col, cell in enumerate(rows):
+                if cell.ID == ID:
+                
+                    if (row + 1 <=self.height-1):
+                        cell = self.puzzle[row +1][col]
+                        print("x+1:",row," y:",col," cell:", cell)
+                        neighbourhood_list.append(cell)
+                        
+                    if (row - 1 >=0):
+                        cell = self.puzzle[row - 1][col]
+                        print("x-1:",row," y:",col," cell:", cell)
+                        neighbourhood_list.append(cell)
+                
+                    if (col + 1 <=self.width-1):
+                        cell = self.puzzle[row][col + 1]
+                        print("x:",row," y+1:",col," cell:", cell)
+                        neighbourhood_list.append(cell)
+                        
+                    if (row - 1 >=0):
+                        cell = self.puzzle[row][col - 1]
+                        print("x:",row," y-1:",col," cell:", cell)
+                        neighbourhood_list.append(cell)                    
+                    break
+                
         return neighbourhood_list
         
                

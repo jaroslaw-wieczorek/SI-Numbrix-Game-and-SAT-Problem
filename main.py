@@ -26,14 +26,12 @@ def main():
     p=Puzzle()
     
     p.load(path)
-    print(str(p.puzzle))
-    
+   
+    print(p)
     print("\n")
     
-    
-    p.load(path2)
     print(str(p.listNeighbourhood(3)))
-
+    
     e=Encoding(81)
     e.encode(p, "magic")
     pass

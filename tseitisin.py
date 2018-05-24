@@ -25,7 +25,7 @@ class Encoding:
         x = x - 1
         ints = []
         xbit = BitArray(uint=x, length=self.gb)
-        for i in range(1, self.gb):
+        for i in range(0, self.gb):
             if xbit[-1]:
                 ints.append(((iD - 1) * self.gb + 1))
             else:

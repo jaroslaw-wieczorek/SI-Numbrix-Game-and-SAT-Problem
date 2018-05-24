@@ -4,11 +4,11 @@ import hashlib
 
 class Encoding:
 
-    def __init__(self, n,):
+    def __init__(self, n):
         self.n = n
         self.hash_table={} #this is dictionary to hash function
-        self.varnumber = 0
-        self.gb = 0
+        self.gb = int(math.ceil(math.log2(self.n)))
+        self.varnumber = self.gb * self.n
 
     def decode(self, puzzle, inputFile):
         for i in range(1, puzzle.n):
@@ -22,18 +22,14 @@ class Encoding:
         print(values)        
 
     def convert(self, iD, x):
-        x -= 1
-        b = math.log2(self.n)
-        b = int(math.ceil(b))
-        self.gb = b
-        self.varnumber = self.gb * self.n
+        x = x - 1
         ints = []
-        xbit = BitArray(uint=x, length=b)
-        for i in range(1, b):
+        xbit = BitArray(uint=x, length=self.gb)
+        for i in range(1, self.gb):
             if xbit[-1]:
-                ints.append(((iD - 1) * b + 1))
+                ints.append(((iD - 1) * self.gb + 1))
             else:
-                ints.append(-((iD - 1) * b + 1))
+                ints.append(-((iD - 1) * self.gb + 1))
             del xbit[-1]
         return ints
     
@@ -67,7 +63,7 @@ class Encoding:
             return CNF
         else:
             clause = []
-            h=hash(ints)
+            h = self.hash(ints)
             #add h to clause
             clause.append(h)
             for i in ints:

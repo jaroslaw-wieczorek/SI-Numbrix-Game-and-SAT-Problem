@@ -20,16 +20,9 @@ class Cell():
         elif ID < 0:
             raise ValueError("ValueError: ID")
         
-        elif type(value) == int and value < 0 : 
+        elif type(value) == int and value < 0:
              raise ValueError("ValueError: ID")
-        elif ID == 0 or value == 0:
-            self.ID = 0
-            self.value = 0
-            
-        elif ID>0 and value == 0:
-            self.ID = ID
-            self.value = 0
-              
+
         else:
             self.ID = ID
             self.value = value

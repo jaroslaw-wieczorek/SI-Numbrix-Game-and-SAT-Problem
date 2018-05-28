@@ -43,8 +43,6 @@ class Puzzle():
                  for row in spamreader:
                      tmp=[]
                      self.height += 1
-                     self.width = 0
-                     
                      for cell_value in row:
                          if cell_value == 'X' or cell_value == 'x' :
                              tmp.append(Cell(0,0))
@@ -56,7 +54,7 @@ class Puzzle():
                              current_id+=1
                                                           
                      self.puzzle.append(tmp)
-                 self.width = len(self.puzzle)
+                 self.width = len(self.puzzle[0])
                 
                      
     def listNeighbourhood(self, ID):

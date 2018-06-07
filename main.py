@@ -19,13 +19,13 @@ def main():
     #print(Cell(1,'.'))
     #print(Cell(0,None))
     
-    
+    path0 = "maps/map0.csv"
     path = "maps/map1.csv"
     path2 = "maps/map2.csv"
     
     p=Puzzle()
     
-    p.load(path)
+    p.load(path0)
    
     print(p)
     print("\n")

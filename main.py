@@ -25,7 +25,7 @@ def main():
     
     p=Puzzle()
     
-    p.load(path2)
+    p.load(path)
    
     print(p)
     print("\n")
@@ -33,7 +33,8 @@ def main():
     #print(str(p.listNeighbourhood(10)))
     
     e = Encoding(4)
-    e.encode(p, "batch")
+    e.encode(p, "scream")
+    e.decode(p,"outscream")
     pass
 
 

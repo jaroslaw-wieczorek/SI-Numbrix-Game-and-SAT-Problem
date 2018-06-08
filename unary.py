@@ -55,7 +55,7 @@ class Encoding:
 
 
     def convert(self, ajdi, x):
-        return [(ajdi -1)*self.n + x]
+        return (ajdi -1)*self.n + x
 
     def iconvert(self, ints):###############3
         for i in ints:
@@ -72,23 +72,21 @@ class Encoding:
         CNF = []
         for x1 in range(1, self.n):
             for x2 in range(x1, self.n+1):
-                #print(x1)
-                #print(x2)
-                #print("-----")
-                CNF.append([[i * -1 for i in self.convert(id, x1)], [i * -1 for i in self.convert(id, x2)]])
+                if x1 != x2:
+                    CNF.append([-1*self.convert(id, x1), -1* self.convert(id, x2)])
         return CNF
 
     def arenotqual(self, id1, id2):###############3
         CNF = []
         for x in range(1, self.n+1):
-            CNF.append([[i * -1 for i in self.convert(id1, x)], [i * -1 for i in self.convert(id2, x)]])
+            CNF.append([-1*self.convert(id1, x), -1*self.convert(id2, x)])
         return CNF
 
     def precedes(self, jd, ids): ###########
         CNF = []
         for x in range(1, self.n):
             clause = []
-            clause.append([i * -1 for i in self.convert(jd, x)])
+            clause.append(-1*self.convert(jd, x))
             for i in ids:
                 clause.append(self.convert(i.ID, x + 1))
             CNF.append(clause)
@@ -101,25 +99,51 @@ class Encoding:
 
     def encode(self, puzzle, outputfile): ###########
         CNF = []
+        #Every cell of the grid must be filled with a natural number ranging from 1 to n;
         for b in puzzle.puzzle:
             for c in b:
                 CNF.append(self.exists(c.ID))
+                #for clau in self.exists(c.ID):
+                #    CNF.append(clau)
+        #No cell has two numbers;
         for b in puzzle.puzzle:
             for c in b:
-                CNF.append(self.isunique(c.ID))
+                #CNF.append(self.isunique(c.ID))
+                for clau in self.isunique(c.ID):
+                    CNF.append(clau)
+
+        """
+        
+        #No two cells have the same number;
         for b in puzzle.puzzle:
             it = iter(b)
             for c in it:
-                CNF.append(self.arenotqual(c.ID, next(it).ID))
+               CNF.append(self.arenotqual(c.ID, next(it).ID))
+            #for clau in self.arenotqual(c.ID, next(it).ID):
+            #        CNF.append(clau)
+            
+            #for x1 in range(1, self.n):
+            #    for x2 in range(x1, self.n + 1):
+            #        #for clau in self.arenotqual(x1, x2):
+            #        CNF.append(self.arenotqual(x1, x2))
+            
+        """
+
+
+
+        #Every cell except the one with number n does have a successor;
         for b in puzzle.puzzle:
             for c in b:
                 ids = puzzle.listNeighbourhood(c.ID)
+                #CNF.append(self.precedes(c.ID, ids))
                 for clau in self.precedes(c.ID, ids):
                     CNF.append(clau)
+        #Pre-filled numbers are unchanged.
         for b in puzzle.puzzle:
             for c in b:
                 if c.value != 0:
                     CNF.append(self.isequal(c.ID, c.value))
+
         with open(outputfile, 'w') as file:
             file.write("p cnf ")
             file.write(str(self.n*self.n))

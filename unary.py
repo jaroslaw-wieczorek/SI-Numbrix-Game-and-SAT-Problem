@@ -48,7 +48,7 @@ class Encoding:
                 for x in range(0, self.size):
                     row.append(next(it))
 
-                print(*row, sep=' ')
+                #print(*row, sep=' ')
                 #print("\n")
 
 
@@ -79,7 +79,8 @@ class Encoding:
     def arenotqual(self, id1, id2):###############3
         CNF = []
         for x in range(1, self.n+1):
-            CNF.append([-1*self.convert(id1, x), -1*self.convert(id2, x)])
+            if id1 != id2:
+                CNF.append([-1*self.convert(id1, x), -1*self.convert(id2, x)])
         return CNF
 
     def precedes(self, jd, ids): ###########
@@ -112,22 +113,22 @@ class Encoding:
                 for clau in self.isunique(c.ID):
                     CNF.append(clau)
 
-        """
+
         
         #No two cells have the same number;
         for b in puzzle.puzzle:
             it = iter(b)
-            for c in it:
-               CNF.append(self.arenotqual(c.ID, next(it).ID))
+            #for c in it:
+            #   CNF.append(self.arenotqual(c.ID, next(it).ID))
             #for clau in self.arenotqual(c.ID, next(it).ID):
             #        CNF.append(clau)
             
-            #for x1 in range(1, self.n):
-            #    for x2 in range(x1, self.n + 1):
-            #        #for clau in self.arenotqual(x1, x2):
-            #        CNF.append(self.arenotqual(x1, x2))
+            for x1 in range(1, self.n):
+                for x2 in range(x1, self.n + 1):
+                    for clau in self.arenotqual(x1, x2):
+                        CNF.append(clau)
             
-        """
+
 
 
 
@@ -138,6 +139,7 @@ class Encoding:
                 #CNF.append(self.precedes(c.ID, ids))
                 for clau in self.precedes(c.ID, ids):
                     CNF.append(clau)
+
         #Pre-filled numbers are unchanged.
         for b in puzzle.puzzle:
             for c in b:
@@ -154,7 +156,7 @@ class Encoding:
                 clauso = str(clauso).replace("[","")
                 clauso = str(clauso).replace("]","")
                 clauso = str(clauso).replace(",","")
-                print(clauso)
+                #print(clauso)
                 file.write(clauso)
                 file.write(" 0")
                 file.write("\n")

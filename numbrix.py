@@ -35,7 +35,12 @@ class Numbrix():
 n=Numbrix()
 p=n.load('maps/map1.csv')
 print(p) 
-print(n.result_reduce_encoding(p))
-print(n.result_encoding(p))
- 
+print()
+r=n.result_reduce_encoding(p)
+r.printMatrix()
+print()
+
+r2=n.result_encoding(p)
+r2.printMatrix()
+print()
         

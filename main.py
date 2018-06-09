@@ -13,6 +13,7 @@ from tseitisin import Tseitin_Encoding
 
 from os import path
 
+
 def main():
     
     #print(Cell(0,0))

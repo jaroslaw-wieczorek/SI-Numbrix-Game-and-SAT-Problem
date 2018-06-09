@@ -128,7 +128,7 @@ class Encoding:
             #   CNF.append(self.arenotqual(c.ID, next(it).ID))
             #for clau in self.arenotqual(c.ID, next(it).ID):
             #        CNF.append(clau)
-            if c.ID != 0:
+            #if c.ID != 0:
                 for x1 in range(1, self.n):
                     for x2 in range(x1, self.n + 1):
                         for clau in self.arenotqual(x1, x2):
@@ -150,9 +150,8 @@ class Encoding:
         #Pre-filled numbers are unchanged.
         for b in self.puzzle.puzzle:
             for c in b:
-                if c.ID != 0:
-                    if c.value != 0:
-                        CNF.append(self.isequal(c.ID, c.value))
+                if c.value != 0:
+                    CNF.append(self.isequal(c.ID, c.value))
 
         with open(outputfile, 'w') as file:
             file.write("p cnf ")

@@ -64,22 +64,22 @@ class Puzzle():
             for col, cell in enumerate(rows):
                 if cell.ID == ID:
                 
-                    if (row + 1 <=self.height-1):
+                    if row + 1 <=self.height-1 and self.puzzle[row +1][col].ID != 0:
                         cell = self.puzzle[row +1][col]
                         #print("x+1:",row," y:",col," cell:", cell)
                         neighbourhood_list.append(cell)
                         
-                    if (row - 1 >=0):
+                    if row - 1 >=0 and self.puzzle[row - 1][col].ID != 0::
                         cell = self.puzzle[row - 1][col]
                         #print("x-1:",row," y:",col," cell:", cell)
                         neighbourhood_list.append(cell)
                 
-                    if (col + 1 <=self.width-1):
+                    if col + 1 <=self.width-1 and self.puzzle[row][col+1].ID != 0:
                         cell = self.puzzle[row][col + 1]
                         #print("x:",row," y+1:",col," cell:", cell)
                         neighbourhood_list.append(cell)
                         
-                    if (col - 1 >=0):
+                    if col - 1 >=0 and self.puzzle[row][col-1].ID != 0:
                         cell = self.puzzle[row][col - 1]
                         #print("x:",row," y-1:",col," cell:", cell)
                         neighbourhood_list.append(cell)                    

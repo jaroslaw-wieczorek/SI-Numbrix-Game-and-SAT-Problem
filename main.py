@@ -4,6 +4,7 @@ Created on Sat Mar 17 13:02:13 2018
 
 @author: afar
 """
+import os
 from board.puzzle import Puzzle
 from board.cell import Cell
 from unary import Encoding
@@ -27,15 +28,17 @@ def main():
     
     p=Puzzle()
     
-    p.load(path0)
+    p.load(path2)
    
-    print(p)
-    print("\n")
+    #print(p)
+    #print("\n")
     
     #print(str(p.listNeighbourhood(10)))
-    
+
+
     e = Encoding(p)
     e.encode("scream")
+    os.system("cryptominisat5 --verb 0 scream > outscream")
     e.decode("outscream")
     pass
 

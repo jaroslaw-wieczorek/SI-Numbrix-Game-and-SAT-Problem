@@ -10,7 +10,7 @@ from board.cell import Cell
 from unary import Encoding
 from reduced_encoding import Reduced_Encoding
 from tseitisin import Tseitin_Encoding
-
+from numbrix import Numbrix
 from os import path
 
 
@@ -27,67 +27,10 @@ def main():
     path1 = "maps/map1.csv"
     path2 = "maps/map2.csv"
     path3 = "maps/map3.csv"
-    p=Puzzle()
-    
-    p.load(path0)
-    #print("MAX VALUE:", p.maxID())
-    #print(p.printMatrix())
-    #print("\n")
-    
-    #print(str(p.listNeighbourhood(10)))
-
-
-    e = Reduced_Encoding(p)
-    e.encode("scream")
-    os.system("cryptominisat5 --verb 0 scream > outscream")
-    result = e.decode("outscream")
-    result.printMatrix()
-    print()
-
-    p.load(path1)
-    #print("MAX VALUE:", p.maxID())
-    #print(p.printMatrix())
-    #print("\n")
-    
-    #print(str(p.listNeighbourhood(10)))
-
-
-    e = Reduced_Encoding(p)
-    e.encode("scream")
-    os.system("cryptominisat5 --verb 0 scream > outscream")
-    result = e.decode("outscream")
-    result.printMatrix()
-    print()
-    
-    p.load(path2)
-    #print("MAX VALUE:", p.maxID())
-    #print(p.printMatrix())
-    #print("\n")
-    
-    #print(str(p.listNeighbourhood(10)))
-
-
-    e = Reduced_Encoding(p)
-    e.encode("scream")
-    os.system("cryptominisat5 --verb 0 scream > outscream")
-    result = e.decode("outscream")
-    result.printMatrix()
-    print()
-    
-    p.load(path3)
-    #print("MAX VALUE:", p.maxID())
-    #print(p.printMatrix())
-    #print("\n")
-    
-    #print(str(p.listNeighbourhood(10)))
-
-
-    e = Reduced_Encoding(p)
-    e.encode("scream")
-    os.system("cryptominisat5 --verb 0 scream > outscream")
-    result = e.decode("outscream")
-    result.printMatrix()
-    print()
+    n = Numbrix()
+    p = n.load(path0)
+    print(n.result_reduce_encoding(p))
+    print(n.result_encoding(p))
 
 if __name__ == '__main__':
     

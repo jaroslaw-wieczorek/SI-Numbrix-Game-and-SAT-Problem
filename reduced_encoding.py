@@ -51,10 +51,6 @@ class Reduced_Encoding:
                         c.value = next(it)
             return self.puzzle
 
-
-
-                # print("\n")
-
     def convert(self, ajdi, x):
         return (ajdi - 1) * self.n + x
 

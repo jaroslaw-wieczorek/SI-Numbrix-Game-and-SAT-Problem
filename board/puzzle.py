@@ -56,7 +56,17 @@ class Puzzle():
                      self.puzzle.append(tmp)
                  self.width = len(self.puzzle[0])
         return True
-                
+    
+    def maxID(self):
+        max = 0
+        for row in self.puzzle:
+            for cell in row:
+                if(cell.ID > max):
+                    max=cell.ID
+                    print(max)
+        return max
+
+    
                      
     def listNeighbourhood(self, ID):
         """Looking neighbourhoods"""

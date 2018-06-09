@@ -29,7 +29,7 @@ def main():
     p=Puzzle()
     
     p.load(path2)
-   
+    print("MAX VALUE:", p.maxID())
     #print(p)
     #print("\n")
     

@@ -17,6 +17,9 @@ class Reduced_Encoding:
         with open(inputFile, "r") as f:
             content = f.readlines()[1:]
             satout = []
+            if len(content) == 0:
+                print("NOT SATISFIED")
+                return
             if len(content) > 1:
                 for line in content:
                     line = line[2:]
@@ -98,16 +101,18 @@ class Reduced_Encoding:
         # No cell has two numbers;
         for b in self.puzzle.puzzle:
             for c in b:
-                # CNF.append(self.isunique(c.ID))
-                for clau in self.isunique(c.ID):
-                    CNF.append(clau)
+                if c.ID != 0:
+                    # CNF.append(self.isunique(c.ID))
+                    for clau in self.isunique(c.ID):
+                        CNF.append(clau)
         # Every cell except the one with number n does have a successor;
         for b in self.puzzle.puzzle:
             for c in b:
-                ids = self.puzzle.listNeighbourhood(c.ID)
-                # CNF.append(self.precedes(c.ID, ids))
-                for clau in self.precedes(c.ID, ids):
-                    CNF.append(clau)
+                if c.ID != 0:
+                    ids = self.puzzle.listNeighbourhood(c.ID)
+                    # CNF.append(self.precedes(c.ID, ids))
+                    for clau in self.precedes(c.ID, ids):
+                        CNF.append(clau)
         # Pre-filled numbers are unchanged.
         for b in self.puzzle.puzzle:
             for c in b:

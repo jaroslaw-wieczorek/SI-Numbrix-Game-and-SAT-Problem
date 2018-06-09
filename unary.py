@@ -8,12 +8,14 @@ from board.puzzle import Puzzle
 
 class Encoding:
 
-    def __init__(self, size):
-        self.size = size
-        self.n = size*size
+    def __init__(self, puzzle):
+        self.puzzle = puzzle
+        self.size = puzzle.height
+        self.n = self.size*self.size
         self.gb = int(math.ceil(math.log2(self.n)))
 
-    def decode(self, puzzle, inputFile):
+
+    def decode(self, inputFile):
         with open(inputFile, "r") as f:
             content = f.readlines()[1:]
             satout = []
@@ -47,8 +49,7 @@ class Encoding:
             for row in answer:
                 for x in range(0, self.size):
                     row.append(next(it))
-
-                #print(*row, sep=' ')
+                print(*row, sep=' ')
                 #print("\n")
 
 
@@ -98,16 +99,16 @@ class Encoding:
         return self.convert(ID, x)
 
 
-    def encode(self, puzzle, outputfile): ###########
+    def encode(self, outputfile): ###########
         CNF = []
         #Every cell of the grid must be filled with a natural number ranging from 1 to n;
-        for b in puzzle.puzzle:
+        for b in self.puzzle.puzzle:
             for c in b:
                 CNF.append(self.exists(c.ID))
                 #for clau in self.exists(c.ID):
                 #    CNF.append(clau)
         #No cell has two numbers;
-        for b in puzzle.puzzle:
+        for b in self.puzzle.puzzle:
             for c in b:
                 #CNF.append(self.isunique(c.ID))
                 for clau in self.isunique(c.ID):
@@ -116,7 +117,7 @@ class Encoding:
 
         
         #No two cells have the same number;
-        for b in puzzle.puzzle:
+        for b in self.puzzle.puzzle:
             it = iter(b)
             #for c in it:
             #   CNF.append(self.arenotqual(c.ID, next(it).ID))
@@ -133,15 +134,15 @@ class Encoding:
 
 
         #Every cell except the one with number n does have a successor;
-        for b in puzzle.puzzle:
+        for b in self.puzzle.puzzle:
             for c in b:
-                ids = puzzle.listNeighbourhood(c.ID)
+                ids = self.puzzle.listNeighbourhood(c.ID)
                 #CNF.append(self.precedes(c.ID, ids))
                 for clau in self.precedes(c.ID, ids):
                     CNF.append(clau)
 
         #Pre-filled numbers are unchanged.
-        for b in puzzle.puzzle:
+        for b in self.puzzle.puzzle:
             for c in b:
                 if c.value != 0:
                     CNF.append(self.isequal(c.ID, c.value))

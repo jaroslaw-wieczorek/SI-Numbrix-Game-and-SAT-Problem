@@ -7,6 +7,8 @@ Created on Sat Mar 17 13:02:13 2018
 from board.puzzle import Puzzle
 from board.cell import Cell
 from unary import Encoding
+from reduced_encoding import Reduced_Encoding
+from tseitisin import Tseitin_Encoding
 
 from os import path
 
@@ -32,9 +34,9 @@ def main():
     
     #print(str(p.listNeighbourhood(10)))
     
-    e = Encoding(4)
-    e.encode(p, "scream")
-    e.decode(p,"outscream")
+    e = Encoding(p)
+    e.encode("scream")
+    e.decode("outscream")
     pass
 
 

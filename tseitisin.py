@@ -3,16 +3,17 @@ from bitstring import BitArray, BitStream
 import math
 import hashlib
 
-class Encoding:
+class Tseitin_Encoding:
 
-    def __init__(self, size):
-        self.size = size
-        self.n = size * size
+    def __init__(self, puzzle):
+        self.puzzle = puzzle
+        self.size = puzzle.height
+        self.n = self.size*self.size
         self.hash_table = {} #this is dictionary to hash function
-        self.gb = int(math.ceil(math.log2(self.n))) +1
+        self.gb = int(math.ceil(math.log2(self.n))) + 1
         self.varnumber = self.gb * self.n
 
-    def decode(self, puzzle, inputFile):
+    def decode(self, inputFile):
         with open(inputFile, "r") as f:
             content = f.readlines()[1:]
             satout = []
@@ -113,9 +114,9 @@ class Encoding:
                 #add -i to clause
                 clause.append(-i)
             for i in ids:
-                CNF.append(Encoding.tseitin(self, self.convert(i.ID, x + 1)))
+                CNF.append(self.tseitin(self.convert(i.ID, x + 1)))
                 #add the output of Encoding.Hash(Encoding.convert(i,x + 1)) to clause
-                clause.append(Encoding.hash(self, self.convert(i.ID, x + 1)))
+                clause.append(self.hash(self.convert(i.ID, x + 1)))
                 #add the output of Tseitin(Convert(i,x + 1)) to CNF
 
             #add clause to CNF
@@ -130,15 +131,15 @@ class Encoding:
         return CNF
 
 
-    def encode(self, puzzle, outputfile):
+    def encode(self, outputfile):
         CNF = []
-        for b in puzzle.puzzle:
+        for b in self.puzzle.puzzle:
             for c in b:
-                ids = puzzle.listNeighbourhood(c.ID)
-                for clau in Encoding.precedes(self, c.ID, ids):
+                ids = self.puzzle.listNeighbourhood(c.ID)
+                for clau in self.precedes(c.ID, ids):
                     CNF.append(clau)
                 #CNF.append(Encoding.precedes(self, c.ID, ids))
-        for b in puzzle.puzzle:
+        for b in self.puzzle.puzzle:
             for c in b:
                 if c.value != 0:
                     #CNF.append(Encoding.isequal(self, c.ID, c.value))

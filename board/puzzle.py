@@ -26,8 +26,11 @@ class Puzzle():
         return ''.join(map(str,self.puzzle))
         
     def printMatrix(self):
-        for i in self.puzzle:
-            print(i)
+        for b in self.puzzle:
+            for c in b:
+                print(c.value, end=' ')
+            print("\n", end='')
+
 
     """
         Fucntion takes csv and load it to self.puzzle variable

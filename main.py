@@ -23,10 +23,40 @@ def main():
     #print(Cell(0,None))
     
     path0 = "maps/map0.csv"
-    path = "maps/map1.csv"
+    path1 = "maps/map1.csv"
     path2 = "maps/map2.csv"
     path3 = "maps/map3.csv"
     p=Puzzle()
+    
+    p.load(path0)
+    #print("MAX VALUE:", p.maxID())
+    #print(p.printMatrix())
+    #print("\n")
+    
+    #print(str(p.listNeighbourhood(10)))
+
+
+    e = Reduced_Encoding(p)
+    e.encode("scream")
+    os.system("cryptominisat5 --verb 0 scream > outscream")
+    result = e.decode("outscream")
+    result.printMatrix()
+    print()
+
+    p.load(path1)
+    #print("MAX VALUE:", p.maxID())
+    #print(p.printMatrix())
+    #print("\n")
+    
+    #print(str(p.listNeighbourhood(10)))
+
+
+    e = Reduced_Encoding(p)
+    e.encode("scream")
+    os.system("cryptominisat5 --verb 0 scream > outscream")
+    result = e.decode("outscream")
+    result.printMatrix()
+    print()
     
     p.load(path2)
     #print("MAX VALUE:", p.maxID())
@@ -41,8 +71,22 @@ def main():
     os.system("cryptominisat5 --verb 0 scream > outscream")
     result = e.decode("outscream")
     result.printMatrix()
-    pass
+    print()
+    
+    p.load(path3)
+    #print("MAX VALUE:", p.maxID())
+    #print(p.printMatrix())
+    #print("\n")
+    
+    #print(str(p.listNeighbourhood(10)))
 
+
+    e = Reduced_Encoding(p)
+    e.encode("scream")
+    os.system("cryptominisat5 --verb 0 scream > outscream")
+    result = e.decode("outscream")
+    result.printMatrix()
+    print()
 
 if __name__ == '__main__':
     

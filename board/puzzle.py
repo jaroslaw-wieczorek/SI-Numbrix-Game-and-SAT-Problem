@@ -66,7 +66,7 @@ class Puzzle():
             for cell in row:
                 if(cell.ID > max):
                     max=cell.ID
-                    print(max)
+                    #print(max)
         return max
 
     

@@ -19,6 +19,9 @@ class Encoding:
         with open(inputFile, "r") as f:
             content = f.readlines()[1:]
             satout = []
+            if len(content) == 0:
+                print("NOT SATISFIED")
+                return
             if len(content) > 1:
                 for line in content:
                     line = line[2:]

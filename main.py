@@ -29,9 +29,9 @@ def main():
     p=Puzzle()
     
     p.load(path2)
-    print("MAX VALUE:", p.maxID())
-    print(p.printMatrix())
-    print("\n")
+    #print("MAX VALUE:", p.maxID())
+    #print(p.printMatrix())
+    #print("\n")
     
     #print(str(p.listNeighbourhood(10)))
 
@@ -39,7 +39,8 @@ def main():
     e = Reduced_Encoding(p)
     e.encode("scream")
     os.system("cryptominisat5 --verb 0 scream > outscream")
-    e.decode("outscream")
+    result = e.decode("outscream")
+    result.printMatrix()
     pass
 
 

@@ -10,7 +10,7 @@ class Reduced_Encoding:
     def __init__(self, puzzle):
         self.puzzle = puzzle
         self.size = puzzle.height
-        self.n = self.size*self.size
+        self.n = puzzle.maxID()
         self.gb = int(math.ceil(math.log2(self.n)))
 
     def decode(self, inputFile):
@@ -44,13 +44,15 @@ class Reduced_Encoding:
                 # add the output of iConvert(ints) to values
                 values.append(self.iconvert(ints))
             # use Puzzle as a template to typeset values into output file--
-            answer = numpy.empty((self.size, 0)).tolist()
-            count = 0
             it = iter(values)
-            for row in answer:
-                for x in range(0, self.size):
-                    row.append(next(it))
-                print(*row, sep=' ')
+            for b in self.puzzle.puzzle:
+                for c in b:
+                    if c.ID != 0:
+                        c.value = next(it)
+            return self.puzzle
+
+
+
                 # print("\n")
 
     def convert(self, ajdi, x):

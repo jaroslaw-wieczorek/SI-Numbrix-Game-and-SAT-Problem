@@ -25,18 +25,18 @@ def main():
     path0 = "maps/map0.csv"
     path = "maps/map1.csv"
     path2 = "maps/map2.csv"
-    
+    path3 = "maps/map3.csv"
     p=Puzzle()
     
     p.load(path2)
-    print("MAX VALUE:", p.maxID())
+    #print("MAX VALUE:", p.maxID())
     #print(p)
     #print("\n")
     
     #print(str(p.listNeighbourhood(10)))
 
 
-    e = Encoding(p)
+    e = Reduced_Encoding(p)
     e.encode("scream")
     os.system("cryptominisat5 --verb 0 scream > outscream")
     e.decode("outscream")

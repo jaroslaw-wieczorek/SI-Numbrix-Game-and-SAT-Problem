@@ -25,7 +25,10 @@ class Puzzle():
     def __repr__(self):
         return ''.join(map(str,self.puzzle))
         
-    
+    def printMatrix(self):
+        for i in self.puzzle:
+            print(i)
+
     """
         Fucntion takes csv and load it to self.puzzle variable
         

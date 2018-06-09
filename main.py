@@ -30,8 +30,8 @@ def main():
     
     p.load(path2)
     print("MAX VALUE:", p.maxID())
-    #print(p)
-    #print("\n")
+    print(p.printMatrix())
+    print("\n")
     
     #print(str(p.listNeighbourhood(10)))
 

@@ -11,7 +11,6 @@ class Reduced_Encoding:
         self.puzzle = puzzle
         self.size = puzzle.height
         self.n = puzzle.maxID()
-        self.gb = int(math.ceil(math.log2(self.n)))
 
     def decode(self, inputFile):
         with open(inputFile, "r") as f:

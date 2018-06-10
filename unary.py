@@ -109,26 +109,11 @@ class Unary_Encoding:
                 if c.ID != 0:
                     for clau in self.isunique(c.ID):
                         CNF.append(clau)
-
-
-        
         #No two cells have the same number;
-        #for b in self.puzzle.puzzle:
-            #it = iter(b)
-            #for c in it:
-            #   CNF.append(self.arenotqual(c.ID, next(it).ID))
-            #for clau in self.arenotqual(c.ID, next(it).ID):
-            #        CNF.append(clau)
-            #if c.ID != 0:
                 for x1 in range(1, self.n):
                     for x2 in range(x1, self.n + 1):
                         for clau in self.arenotqual(x1, x2):
                             CNF.append(clau)
-            
-
-
-
-
         #Every cell except the one with number n does have a successor;
         for b in self.puzzle.puzzle:
             for c in b:

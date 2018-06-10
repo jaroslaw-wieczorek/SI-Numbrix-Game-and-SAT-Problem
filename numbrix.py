@@ -1,7 +1,7 @@
 import os
 from board.puzzle import Puzzle
 from board.cell import Cell
-from unary import Encoding
+from unary import Unary_Encoding
 from reduced_encoding import Reduced_Encoding
 from tseitisin import Tseitin_Encoding
 from os import path
@@ -25,7 +25,7 @@ class Numbrix():
         return result
 
     def result_encoding(self, p: Puzzle):
-        e = Encoding(p)
+        e = Unary_Encoding(p)
         e.encode("scream")
         os.system("cryptominisat5 --verb 0 scream > outscream")
         result = e.decode("outscream")

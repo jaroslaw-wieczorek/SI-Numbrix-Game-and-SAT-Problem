@@ -7,7 +7,7 @@ Created on Sat Mar 17 13:02:13 2018
 import os
 from board.puzzle import Puzzle
 from board.cell import Cell
-from unary import Encoding
+from unary import Unary_Encoding
 from reduced_encoding import Reduced_Encoding
 from tseitisin import Tseitin_Encoding
 from numbrix import Numbrix

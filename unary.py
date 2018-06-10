@@ -6,7 +6,7 @@ from bitstring import BitArray
 from board.puzzle import Puzzle
 
 
-class Encoding:
+class Unary_Encoding:
     def __init__(self, puzzle):
         self.puzzle = puzzle
         self.size = puzzle.height

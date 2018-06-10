@@ -7,13 +7,11 @@ from board.puzzle import Puzzle
 
 
 class Encoding:
-
     def __init__(self, puzzle):
         self.puzzle = puzzle
         self.size = puzzle.height
         self.n = puzzle.maxID()
         self.gb = int(math.ceil(math.log2(self.n)))
-
 
     def decode(self, inputFile):
         with open(inputFile, "r") as f:
@@ -53,54 +51,50 @@ class Encoding:
                         c.value = next(it)
             return self.puzzle
 
-
-
-
     def convert(self, ajdi, x):
-        return (ajdi -1)*self.n + x
+        return (ajdi - 1) * self.n + x
 
-    def iconvert(self, ints):###############3
+    def iconvert(self, ints):
         for i in ints:
             if i > 0:
                 return ((i - 1) % self.n) + 1
 
-    def exists(self, id):###############3
+    def exists(self, id):
         out = []
-        for x in range(1, self.n+1):
+        for x in range(1, self.n + 1):
             out.append(self.convert(id, x))
         return out
 
-    def isunique(self, id):###############3
+    def isunique(self, id):
         CNF = []
         for x1 in range(1, self.n):
-            for x2 in range(x1, self.n+1):
+            for x2 in range(x1, self.n + 1):
                 if x1 != x2:
-                    CNF.append([-1*self.convert(id, x1), -1* self.convert(id, x2)])
+                    CNF.append([-1 * self.convert(id, x1), -1 * self.convert(id, x2)])
         return CNF
 
-    def arenotqual(self, id1, id2):###############3
+    def arenotqual(self, id1, id2):
         CNF = []
-        for x in range(1, self.n+1):
+        for x in range(1, self.n + 1):
             if id1 != id2:
-                CNF.append([-1*self.convert(id1, x), -1*self.convert(id2, x)])
+                CNF.append([-1 * self.convert(id1, x), -1 * self.convert(id2, x)])
         return CNF
 
-    def precedes(self, jd, ids): ###########
+    def precedes(self, jd, ids):
         CNF = []
         for x in range(1, self.n):
             clause = []
-            clause.append(-1*self.convert(jd, x))
+            clause.append(-1 * self.convert(jd, x))
             for i in ids:
                 clause.append(self.convert(i.ID, x + 1))
             CNF.append(clause)
         return CNF
 
-
-    def isequal(self, ID, x): ##########
+    def isequal(self, ID, x):
         return self.convert(ID, x)
 
 
-    def encode(self, outputfile): ###########
+    def encode(self, outputfile):
         CNF = []
         #Every cell of the grid must be filled with a natural number ranging from 1 to n;
         for b in self.puzzle.puzzle:
@@ -113,7 +107,6 @@ class Encoding:
         for b in self.puzzle.puzzle:
             for c in b:
                 if c.ID != 0:
-                    #CNF.append(self.isunique(c.ID))
                     for clau in self.isunique(c.ID):
                         CNF.append(clau)
 
@@ -141,10 +134,8 @@ class Encoding:
             for c in b:
                 if c.ID != 0:
                     ids = self.puzzle.listNeighbourhood(c.ID)
-                    #CNF.append(self.precedes(c.ID, ids))
                     for clau in self.precedes(c.ID, ids):
                         CNF.append(clau)
-
         #Pre-filled numbers are unchanged.
         for b in self.puzzle.puzzle:
             for c in b:
@@ -153,15 +144,14 @@ class Encoding:
 
         with open(outputfile, 'w') as file:
             file.write("p cnf ")
-            file.write(str(self.n*self.n))
+            file.write(str(self.n * self.n))
             file.write(" ")
             file.write(str(len(CNF)))
             file.write("\n")
             for clauso in CNF:
-                clauso = str(clauso).replace("[","")
-                clauso = str(clauso).replace("]","")
-                clauso = str(clauso).replace(",","")
-                #print(clauso)
+                clauso = str(clauso).replace("[", "")
+                clauso = str(clauso).replace("]", "")
+                clauso = str(clauso).replace(",",  "")
                 file.write(clauso)
                 file.write(" 0")
                 file.write("\n")

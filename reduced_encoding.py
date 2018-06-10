@@ -54,18 +54,18 @@ class Reduced_Encoding:
     def convert(self, ajdi, x):
         return (ajdi - 1) * self.n + x
 
-    def iconvert(self, ints):  ###############3
+    def iconvert(self, ints):
         for i in ints:
             if i > 0:
                 return ((i - 1) % self.n) + 1
 
-    def exists(self, id):  ###############3
+    def exists(self, id):
         out = []
         for x in range(1, self.n + 1):
             out.append(self.convert(id, x))
         return out
 
-    def isunique(self, id):  ###############3
+    def isunique(self, id):
         CNF = []
         for x1 in range(1, self.n):
             for x2 in range(x1, self.n + 1):
@@ -73,14 +73,14 @@ class Reduced_Encoding:
                     CNF.append([-1 * self.convert(id, x1), -1 * self.convert(id, x2)])
         return CNF
 
-    def arenotqual(self, id1, id2):  ###############3
+    def arenotqual(self, id1, id2):
         CNF = []
         for x in range(1, self.n + 1):
             if id1 != id2:
                 CNF.append([-1 * self.convert(id1, x), -1 * self.convert(id2, x)])
         return CNF
 
-    def precedes(self, jd, ids):  ###########
+    def precedes(self, jd, ids):
         CNF = []
         for x in range(1, self.n):
             clause = []
@@ -90,17 +90,16 @@ class Reduced_Encoding:
             CNF.append(clause)
         return CNF
 
-    def isequal(self, ID, x):  ##########
+    def isequal(self, ID, x):
         return self.convert(ID, x)
 
 
-    def encode(self, outputfile):  ###########
+    def encode(self, outputfile):
         CNF = []
         # No cell has two numbers;
         for b in self.puzzle.puzzle:
             for c in b:
                 if c.ID != 0:
-                    # CNF.append(self.isunique(c.ID))
                     for clau in self.isunique(c.ID):
                         CNF.append(clau)
         # Every cell except the one with number n does have a successor;
@@ -108,7 +107,6 @@ class Reduced_Encoding:
             for c in b:
                 if c.ID != 0:
                     ids = self.puzzle.listNeighbourhood(c.ID)
-                    # CNF.append(self.precedes(c.ID, ids))
                     for clau in self.precedes(c.ID, ids):
                         CNF.append(clau)
         # Pre-filled numbers are unchanged.
@@ -127,7 +125,6 @@ class Reduced_Encoding:
                 clauso = str(clauso).replace("[", "")
                 clauso = str(clauso).replace("]", "")
                 clauso = str(clauso).replace(",", "")
-                # print(clauso)
                 file.write(clauso)
                 file.write(" 0")
                 file.write("\n")

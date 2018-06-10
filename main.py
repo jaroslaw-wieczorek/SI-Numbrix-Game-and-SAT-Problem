@@ -19,10 +19,13 @@ def main():
     path1 = "maps/map1.csv"
     path2 = "maps/map2.csv"
     path3 = "maps/map3.csv"
+    path4 = "maps/map4.csv"
     n = Numbrix()
-    p = n.load(path0)
-    print(n.result_reduce_encoding(p))
-    print(n.result_encoding(p))
+    p = n.load(path4)
+    n.result_reduce_encoding(p).printMatrix()
+    print("")
+    p = n.load(path4)
+    n.result_encoding(p).printMatrix()
 
 if __name__ == '__main__':
     

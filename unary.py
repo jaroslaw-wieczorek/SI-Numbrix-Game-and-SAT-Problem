@@ -11,7 +11,6 @@ class Unary_Encoding:
         self.puzzle = puzzle
         self.size = puzzle.height
         self.n = puzzle.maxID()
-        self.gb = int(math.ceil(math.log2(self.n)))
 
     def decode(self, inputFile):
         with open(inputFile, "r") as f:
@@ -101,8 +100,6 @@ class Unary_Encoding:
             for c in b:
                 if c.ID != 0:
                     CNF.append(self.exists(c.ID))
-                    #for clau in self.exists(c.ID):
-                    #    CNF.append(clau)
         #No cell has two numbers;
         for b in self.puzzle.puzzle:
             for c in b:

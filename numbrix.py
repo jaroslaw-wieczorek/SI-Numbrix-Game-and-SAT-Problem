@@ -20,13 +20,15 @@ class Numbrix():
     def result_reduce_encoding(self, p: Puzzle):
         e = Reduced_Encoding(p)
         e.encode("scream")
-        os.system("cryptominisat5 --verb 0 scream > outscream")
+        #os.system("cryptominisat5 --verb 0 scream > outscream")
+        os.popen("cryptominisat5 --verb 0 scream > outscream").read()
         result = e.decode("outscream")
         return result
 
     def result_encoding(self, p: Puzzle):
         e = Unary_Encoding(p)
         e.encode("scream")
-        os.system("cryptominisat5 --verb 0 scream > outscream")
+        #os.system("cryptominisat5 --verb 0 scream > outscream")
+        os.popen("cryptominisat5 --verb 0 scream > outscream").read()
         result = e.decode("outscream")
         return result

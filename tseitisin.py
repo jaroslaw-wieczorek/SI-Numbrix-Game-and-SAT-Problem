@@ -3,16 +3,18 @@ from bitstring import BitArray, BitStream
 import math
 import hashlib
 
+
 class Tseitin_Encoding:
 
-    def __init__(self, puzzle):
-        self.puzzle = puzzle
-        self.size = puzzle.height
+    def __init__(self, gameBoard):
+        self.gameBoard = gameBoard
+        self.size = gameBoard.height
         self.n = self.size*self.size
         self.hash_table = {} #this is dictionary to hash function
         self.gb = int(math.ceil(math.log2(self.n))) + 1
         self.varnumber = self.gb * self.n
 
+   
     def decode(self, inputFile):
         with open(inputFile, "r") as f:
             content = f.readlines()[1:]
@@ -40,7 +42,7 @@ class Tseitin_Encoding:
                 # remove the first x literals from inputFile
                 # add the output of iConvert(ints) to values
                 values.append(self.iconverse(ints))
-            # use Puzzle as a template to typeset values into output file--
+            # use Board as a template to typeset values into output file--
             answer = numpy.empty((self.size, 0)).tolist()
             count = 0
             it = iter(values)
@@ -133,13 +135,13 @@ class Tseitin_Encoding:
 
     def encode(self, outputfile):
         CNF = []
-        for b in self.puzzle.puzzle:
+        for b in self.gameBoard.table:
             for c in b:
-                ids = self.puzzle.listNeighbourhood(c.ID)
+                ids = self.gameBoard.listNeighbourhood(c.ID)
                 for clau in self.precedes(c.ID, ids):
                     CNF.append(clau)
                 #CNF.append(Encoding.precedes(self, c.ID, ids))
-        for b in self.puzzle.puzzle:
+        for b in  self.gameBoard.table:
             for c in b:
                 if c.value != 0:
                     #CNF.append(Encoding.isequal(self, c.ID, c.value))

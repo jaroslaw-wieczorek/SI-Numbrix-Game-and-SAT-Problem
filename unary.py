@@ -3,14 +3,14 @@ import math
 import numpy
 from bitstring import BitArray
 
-from board.puzzle import Puzzle
+from board.game_board import GameBoard
 
 
 class Unary_Encoding:
-    def __init__(self, puzzle):
-        self.puzzle = puzzle
-        self.size = puzzle.height
-        self.n = puzzle.maxID()
+    def __init__(self, gameBoard):
+        self.gameBoard = gameBoard
+        self.size = gameBoard.height
+        self.n = gameBoard.maxID()
 
     def decode(self, inputFile):
         with open(inputFile, "r") as f:
@@ -42,13 +42,13 @@ class Unary_Encoding:
                 # remove the first x literals from inputFile
                 # add the output of iConvert(ints) to values
                 values.append(self.iconvert(ints))
-            # use Puzzle as a template to typeset values into output file--
+            # use Board as a template to typeset values into output file--
             it = iter(values)
-            for b in self.puzzle.puzzle:
+            for b in self.gameBoard.table:
                 for c in b:
                     if c.ID != 0:
                         c.value = next(it)
-            return self.puzzle
+            return self.gameBoard
 
     def convert(self, ajdi, x):
         return (ajdi - 1) * self.n + x
@@ -96,12 +96,12 @@ class Unary_Encoding:
     def encode(self, outputfile):
         CNF = []
         #Every cell of the grid must be filled with a natural number ranging from 1 to n;
-        for b in self.puzzle.puzzle:
+        for b in self.gameBoard.table:
             for c in b:
                 if c.ID != 0:
                     CNF.append(self.exists(c.ID))
         #No cell has two numbers;
-        for b in self.puzzle.puzzle:
+        for b in self.gameBoard.table:
             for c in b:
                 if c.ID != 0:
                     for clau in self.isunique(c.ID):
@@ -112,14 +112,14 @@ class Unary_Encoding:
                         for clau in self.arenotqual(x1, x2):
                             CNF.append(clau)
         #Every cell except the one with number n does have a successor;
-        for b in self.puzzle.puzzle:
+        for b in self.gameBoard.table:
             for c in b:
                 if c.ID != 0:
-                    ids = self.puzzle.listNeighbourhood(c.ID)
+                    ids = self.gameBoard.listNeighbourhood(c.ID)
                     for clau in self.precedes(c.ID, ids):
                         CNF.append(clau)
         #Pre-filled numbers are unchanged.
-        for b in self.puzzle.puzzle:
+        for b in self.gameBoard.table:
             for c in b:
                 if c.value != 0:
                     CNF.append(self.isequal(c.ID, c.value))

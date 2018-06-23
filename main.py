@@ -5,7 +5,7 @@ Created on Sat Mar 17 13:02:13 2018
 @author: afar
 """
 import os
-from board.puzzle import Puzzle
+from board.game_board import GameBoard
 from board.cell import Cell
 from unary import Unary_Encoding
 from reduced_encoding import Reduced_Encoding
@@ -22,6 +22,7 @@ def main():
     path4 = "maps/map4.csv"
     n = Numbrix()
     p = n.load(path4)
+    print(p)
     n.result_reduce_encoding(p).printMatrix()
     print("")
     p = n.load(path4)

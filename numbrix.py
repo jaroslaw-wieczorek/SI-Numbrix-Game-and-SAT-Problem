@@ -1,5 +1,5 @@
 import os
-from board.puzzle import Puzzle
+from board.game_board import GameBoard
 from board.cell import Cell
 from unary import Unary_Encoding
 from reduced_encoding import Reduced_Encoding
@@ -13,20 +13,20 @@ class Numbrix():
 
     # Load puzzle
     def load(self, path):
-        p = Puzzle()
-        p.load(path)
-        return p
+        g = GameBoard()
+        g.load(path)
+        return g
 
-    def result_reduce_encoding(self, p: Puzzle):
-        e = Reduced_Encoding(p)
+    def result_reduce_encoding(self, g: GameBoard):
+        e = Reduced_Encoding(g)
         e.encode("scream")
         #os.system("cryptominisat5 --verb 0 scream > outscream")
         os.popen("cryptominisat5 --verb 0 scream > outscream").read()
         result = e.decode("outscream")
         return result
 
-    def result_encoding(self, p: Puzzle):
-        e = Unary_Encoding(p)
+    def result_encoding(self, g: GameBoard):
+        e = Unary_Encoding(g)
         e.encode("scream")
         #os.system("cryptominisat5 --verb 0 scream > outscream")
         os.popen("cryptominisat5 --verb 0 scream > outscream").read()
